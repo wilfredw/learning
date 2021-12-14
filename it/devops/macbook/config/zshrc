@@ -1,0 +1,36 @@
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_271.jdk/Contents/Home
+export MAVEN_HOME=/Users/buhuan/Softwares/apache-maven-3.6.3
+export MYSQL_HOME=/usr/local/mysql
+export PATH=$MAVEN_HOME/bin:$PATH:$MYSQL_HOME/bin
+
+
+########## show git branch in terminal prompt ################
+### reference: https://stackoverflow.com/questions/17333531/how-can-i-display-the-current-branch-and-folder-path-in-terminal
+### reference: https://misc.flogisoft.com/bash/tip_colors_and_formatting
+### 
+parse_git_branch() {
+    git branch 2> /dev/null | sed -n -e 's/^\* \(.*\)/[\1] /p'
+}
+COLOR_DEF='%f'
+COLOR_USR='%F{243}'
+COLOR_DIR='%F{197}'
+#COLOR_GIT='%F{39}'
+COLOR_GIT='%F{27}'
+#COLOR_GIT='%F{9}'
+NEWLINE=$'\n'
+setopt PROMPT_SUBST
+#export PROMPT='${COLOR_USR}%n@%M ${COLOR_DIR}%d ${COLOR_GIT}$(parse_git_branch)${COLOR_DEF}${NEWLINE}%% '
+export PROMPT='%n@%m %1~ ${COLOR_GIT}$(parse_git_branch)${COLOR_DEF}%# '
+########################
+
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/buhuan/.sdkman"
+[[ -s "/Users/buhuan/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/buhuan/.sdkman/bin/sdkman-init.sh"
