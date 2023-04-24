@@ -1,0 +1,19 @@
+CREATE TABLE `bee_send_kafka_message` (
+  `id` bigint(20) unsigned NOT NULL COMMENT '主键id',
+  `msg_topic` varchar(128) NOT NULL DEFAULT '' COMMENT 'topic',
+  `topic_key` varchar(128) NOT NULL DEFAULT '' COMMENT 'key',
+  `msg_content` varchar(5120) NOT NULL COMMENT '消息内容',
+  `retry_num` int(11) NOT NULL DEFAULT '4' COMMENT '最多重试次数',
+  `current_retry_num` int(11) NOT NULL DEFAULT '0' COMMENT '已经发送次数',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '数据状态 0：未发送 1：发送中 2：发送成功 3:发送失败',
+  `failed_reason` varchar(48) NOT NULL DEFAULT '' COMMENT '发送失败原因',
+  `is_pre` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否预发',
+  `is_delete` bigint(20) NOT NULL DEFAULT '0' COMMENT '逻辑删除字段,0:未删除, 如果逻辑删除为id值',
+  `gmt_create` bigint(20) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `gmt_modified` bigint(20) NOT NULL DEFAULT '0' COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `idx_msg_topic_topic_key_status_id` (`msg_topic`,`topic_key`,`status`,`id`),
+  KEY `idx_msg_topic_topic_key_id` (`msg_topic`,`topic_key`,`id`),
+  KEY `idx_status_gmt_modified` (`status`,`gmt_modified`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='kafka生产消息重试表';
+

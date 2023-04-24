@@ -1,0 +1,21 @@
+CREATE TABLE `paladin_operation_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `biz_type` varchar(64) NOT NULL DEFAULT '' COMMENT '业务类型',
+  `module_type` varchar(64) NOT NULL DEFAULT '' COMMENT '业务下的模块类型',
+  `op_type` varchar(32) NOT NULL DEFAULT '' COMMENT '操作类型',
+  `ref_id` varchar(128) NOT NULL DEFAULT '' COMMENT '操作日志关联的对象id',
+  `search_content` varchar(255) NOT NULL DEFAULT '' COMMENT '日志搜索内容',
+  `log_content` text COMMENT '日志内容',
+  `env` tinyint(1) NOT NULL DEFAULT '0' COMMENT '环境标识##',
+  `gmt_create` bigint(13) NOT NULL DEFAULT '0' COMMENT '创建时间',
+  `gmt_modified` bigint(13) NOT NULL DEFAULT '0' COMMENT '修改时间',
+  `gmt_delete` bigint(13) NOT NULL DEFAULT '0' COMMENT '删除时间',
+  `is_deleted` tinyint(1) NOT NULL DEFAULT '0' COMMENT '状态',
+  `creator` varchar(64) NOT NULL DEFAULT '' COMMENT '创建人',
+  `modifier` varchar(64) NOT NULL DEFAULT '' COMMENT '修改人',
+  PRIMARY KEY (`id`),
+  KEY `idx_gmt_create` (`gmt_create`),
+  KEY `idx_ref_id_gmt_create` (`ref_id`,`gmt_create`),
+  KEY `idx_biz_type_module_type_gmt_create` (`biz_type`,`module_type`,`gmt_create`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='增值服务操作记录表 #C#';
+
