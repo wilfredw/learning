@@ -34,3 +34,6 @@ export PROMPT='%n@%m %1~ ${COLOR_GIT}$(parse_git_branch)${COLOR_DEF}%# '
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/Users/buhuan/.sdkman"
 [[ -s "/Users/buhuan/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/buhuan/.sdkman/bin/sdkman-init.sh"
+
+
+
